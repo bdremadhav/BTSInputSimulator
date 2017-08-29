@@ -14,7 +14,7 @@ import java.util.TimerTask;
 public class BTSInputGenerator {
     public static void main(String[] args){
         try {
-            String simulatorBaseDir ="/home/cloudera/simulator/";
+            String simulatorBaseDir ="/home/ec2-user/simulator/";
             long scheduleMillis = 1000 * Long.parseLong(args[0]);
             Integer noOfMessagesInBatch = Integer.parseInt(args[1]);
 

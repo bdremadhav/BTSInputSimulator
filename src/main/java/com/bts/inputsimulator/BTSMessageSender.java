@@ -16,8 +16,8 @@ import java.util.TimerTask;
 public class BTSMessageSender {
     public static void main(String[] args) {
         try {
-            String simulatorBaseDir ="/home/cloudera/simulator/";
-            String flumeBaseDir = "/home/cloudera/spool/";
+            String simulatorBaseDir ="/home/ec2-user/simulator/";
+            String flumeBaseDir = "/home/ec2-user/";
             long scheduleMillis = 1000 * Long.parseLong(args[0]);
             Integer noOfMessagesInBatch = Integer.parseInt(args[1]);
 
@@ -50,9 +50,9 @@ class SenderTask extends TimerTask{
 
             for(int i=1 ; i<=noOfMessages; i++ ) {
                 Long msgId = ++count;
-                Files.move(Paths.get(simulatorBaseDir + "deal/"+ msgId +".xml"), Paths.get(flumeBaseDir + "deal/"+ msgId +".xml"));
-                Files.move(Paths.get(simulatorBaseDir + "tnx/"+ msgId +".xml"), Paths.get(flumeBaseDir + "tnx/"+ msgId +".xml"));
-                Files.move(Paths.get(simulatorBaseDir + "te/"+ msgId +".xml"), Paths.get(flumeBaseDir + "te/"+ msgId +".xml"));
+                Files.move(Paths.get(simulatorBaseDir + "deal/"+ msgId +".xml"), Paths.get(flumeBaseDir + "spool-deal/"+ msgId +".xml"));
+                Files.move(Paths.get(simulatorBaseDir + "tnx/"+ msgId +".xml"), Paths.get(flumeBaseDir + "spool-transaction/"+ msgId +".xml"));
+                Files.move(Paths.get(simulatorBaseDir + "te/"+ msgId +".xml"), Paths.get(flumeBaseDir + "spool-te/"+ msgId +".xml"));
             }
 
             Writer wr = new FileWriter(simulatorBaseDir+"MessagesSentCount.txt");
