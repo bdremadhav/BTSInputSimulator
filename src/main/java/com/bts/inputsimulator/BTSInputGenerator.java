@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
+import java.util.Date;
 import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -61,7 +62,6 @@ class RunTask extends TimerTask{
                 int lastIndex = finalDeal.lastIndexOf("</"+dealColumns[j]+">");
                 finalDeal = finalDeal.substring(0,startIndex)+dealColumnValuePrefixes[j]+count+finalDeal.substring(lastIndex);
             }
-            System.out.println("finalDeal = " + finalDeal);
 
             String finalTnx = tnxMsg;
             for(int j=0; j<tnxColumns.length; j++) {
@@ -69,7 +69,6 @@ class RunTask extends TimerTask{
                 int lastIndex = finalTnx.indexOf("</"+tnxColumns[j]+">");
                 finalTnx = finalTnx.substring(0,startIndex)+tnxColumnValuePrefixes[j]+count+finalTnx.substring(lastIndex);
             }
-            System.out.println("finalTnx = " + finalTnx);
 
             String finalTe = teMsg;
             for(int j=0; j<teColumns.length; j++) {
@@ -77,8 +76,6 @@ class RunTask extends TimerTask{
                 int lastIndex = finalTe.indexOf("</"+teColumns[j]+">");
                 finalTe = finalTe.substring(0,startIndex)+teColumnValuePrefixes[j]+count+finalTe.substring(lastIndex);
             }
-            System.out.println("finalTe = " + finalTe);
-
 
                 Writer dealWriter = new FileWriter(simulatorBaseDir+"deal/"+count+".xml");
                 dealWriter.write(finalDeal);
@@ -93,14 +90,18 @@ class RunTask extends TimerTask{
                 teWriter.close();
 
         }
+            System.out.println("Messages Generated count = " + count);
+            System.out.println("Current Time = " + new Date().toString());
 
             Writer wr = new FileWriter(simulatorBaseDir+"bkIdCount.txt");
             wr.write(new Long(count).toString());
             wr.close();
+
         }
         catch (Exception e){
-
             e.printStackTrace();
+        }
+        finally {
             try {
                 Writer wr = new FileWriter(simulatorBaseDir+"bkIdCount.txt");
                 wr.write(new Long(count).toString());

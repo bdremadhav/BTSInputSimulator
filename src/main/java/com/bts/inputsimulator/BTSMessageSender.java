@@ -60,6 +60,7 @@ class SenderTask extends TimerTask{
             wr.close();
         }catch (Exception e){
             e.printStackTrace();
+        }finally {
             try {
                 Writer wr = new FileWriter(simulatorBaseDir+"MessagesSentCount.txt");
                 wr.write(new Long(count).toString());
