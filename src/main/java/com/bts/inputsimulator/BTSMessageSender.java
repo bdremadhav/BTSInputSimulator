@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Date;
 import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -55,6 +56,8 @@ class SenderTask extends TimerTask{
                 Files.move(Paths.get(simulatorBaseDir + "te/"+ msgId +".xml"), Paths.get(flumeBaseDir + "spool-te/"+ msgId +".xml"));
             }
 
+            System.out.println("Messages Sent count = " + count);
+            System.out.println("Current Time = " + new Date().toString());
             Writer wr = new FileWriter(simulatorBaseDir+"MessagesSentCount.txt");
             wr.write(new Long(count).toString());
             wr.close();
