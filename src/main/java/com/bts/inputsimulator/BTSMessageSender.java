@@ -57,12 +57,11 @@ class SenderTask extends TimerTask{
                 Files.move(Paths.get(simulatorBaseDir + "deal/"+ msgId +".xml"), Paths.get(flumeBaseDir + "spool-deal/"+ msgId +".xml"), StandardCopyOption.REPLACE_EXISTING);
                 Files.move(Paths.get(simulatorBaseDir + "tnx/"+ msgId +".xml"), Paths.get(flumeBaseDir + "spool-transaction/"+ msgId +".xml"),StandardCopyOption.REPLACE_EXISTING);
                 Files.move(Paths.get(simulatorBaseDir + "te/"+ msgId +".xml"), Paths.get(flumeBaseDir + "spool-te/"+ msgId +".xml"),StandardCopyOption.REPLACE_EXISTING);
+                Writer wr = new FileWriter(simulatorBaseDir+"MessagesSentCount.txt");
+                wr.write(new Long(count).toString());
+                wr.close();
             }
 
-
-            Writer wr = new FileWriter(simulatorBaseDir+"MessagesSentCount.txt");
-            wr.write(new Long(count).toString());
-            wr.close();
         }catch (Exception e){
             e.printStackTrace();
         }finally {
