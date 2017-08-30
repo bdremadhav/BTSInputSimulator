@@ -41,6 +41,8 @@ class RunTask extends TimerTask{
     }
     @Override
     public void run() {
+        System.out.println("Messages Generated count = " + count);
+        System.out.println("Current Time = " + new Date().toString());
 
         try {
         String[] dealColumns = new String[]{"BusinessKey","CtgyCd"};
@@ -90,8 +92,6 @@ class RunTask extends TimerTask{
                 teWriter.close();
 
         }
-            System.out.println("Messages Generated count = " + count);
-            System.out.println("Current Time = " + new Date().toString());
 
             Writer wr = new FileWriter(simulatorBaseDir+"bkIdCount.txt");
             wr.write(new Long(count).toString());

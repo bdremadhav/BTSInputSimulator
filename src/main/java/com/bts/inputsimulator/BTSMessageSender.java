@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.Date;
 import java.util.Scanner;
 import java.util.Timer;
@@ -47,17 +48,18 @@ class SenderTask extends TimerTask{
     }
     @Override
     public void run() {
+        System.out.println("Messages Sent count = " + count);
+        System.out.println("Current Time = " + new Date().toString());
         try {
 
             for(int i=1 ; i<=noOfMessages; i++ ) {
                 Long msgId = ++count;
-                Files.move(Paths.get(simulatorBaseDir + "deal/"+ msgId +".xml"), Paths.get(flumeBaseDir + "spool-deal/"+ msgId +".xml"));
-                Files.move(Paths.get(simulatorBaseDir + "tnx/"+ msgId +".xml"), Paths.get(flumeBaseDir + "spool-transaction/"+ msgId +".xml"));
-                Files.move(Paths.get(simulatorBaseDir + "te/"+ msgId +".xml"), Paths.get(flumeBaseDir + "spool-te/"+ msgId +".xml"));
+                Files.move(Paths.get(simulatorBaseDir + "deal/"+ msgId +".xml"), Paths.get(flumeBaseDir + "spool-deal/"+ msgId +".xml"), StandardCopyOption.REPLACE_EXISTING);
+                Files.move(Paths.get(simulatorBaseDir + "tnx/"+ msgId +".xml"), Paths.get(flumeBaseDir + "spool-transaction/"+ msgId +".xml"),StandardCopyOption.REPLACE_EXISTING);
+                Files.move(Paths.get(simulatorBaseDir + "te/"+ msgId +".xml"), Paths.get(flumeBaseDir + "spool-te/"+ msgId +".xml"),StandardCopyOption.REPLACE_EXISTING);
             }
 
-            System.out.println("Messages Sent count = " + count);
-            System.out.println("Current Time = " + new Date().toString());
+
             Writer wr = new FileWriter(simulatorBaseDir+"MessagesSentCount.txt");
             wr.write(new Long(count).toString());
             wr.close();
