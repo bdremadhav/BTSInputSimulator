@@ -7,10 +7,7 @@ import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.Date;
-import java.util.Scanner;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 /**
  * Created by cloudera on 8/29/17.
@@ -35,7 +32,7 @@ public class BTSMessageSender {
 class SenderTask extends TimerTask{
 
     private Integer noOfMessages;
-    private Long count;
+    private  Long count;
     private String simulatorBaseDir;
     private String flumeBaseDir;
 
@@ -44,7 +41,18 @@ class SenderTask extends TimerTask{
         this.simulatorBaseDir = simulatorBaseDir;
         this.flumeBaseDir = flumeBaseDir;
         Scanner scanner = new Scanner(new File(simulatorBaseDir+"MessagesSentCount.txt"));
-        count = scanner.nextLong();
+        try {
+            count = scanner.nextLong();
+        }catch (Exception e){
+            File file = new File(simulatorBaseDir+"deal/");
+            List<Long> fileNumbers = new LinkedList<Long>();
+            for(String filename : file.list()){
+                fileNumbers.add(Long.parseLong(filename.replace(".xml","")));
+            }
+            Collections.sort(fileNumbers);
+            count = fileNumbers.get(0) -1;
+        }
+
     }
     @Override
     public void run() {
